@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <array>
 
 namespace lzokay {
 
@@ -23,10 +24,10 @@ protected:
 
   /* List encoding of previous 3-byte data matches */
   struct Match3 {
-    uint16_t head[HashSize]; /* key -> chain-head-pos */
-    uint16_t chain_sz[HashSize]; /* key -> chain-size */
-    uint16_t chain[BufSize]; /* chain-pos -> next-chain-pos */
-    uint16_t best_len[BufSize]; /* chain-pos -> best-match-length */
+    std::array<uint16_t, HashSize> head; /* key -> chain-head-pos */
+    std::array<uint16_t, HashSize> chain_sz; /* key -> chain-size */
+    std::array<uint16_t, BufSize> chain; /* chain-pos -> next-chain-pos */
+    std::array<uint16_t, BufSize> best_len; /* chain-pos -> best-match-length */
   };
   /* Encoding of 2-byte data matches */
   struct Match2 {
