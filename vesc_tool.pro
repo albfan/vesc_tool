@@ -330,4 +330,31 @@ ios {
     CONFIG -= warn_on
     QMAKE_APPLE_TARGETED_DEVICE_FAMILY = 1,2
 }
-CONFIG -= warn_on
+
+unix {
+    isEmpty(PREFIX) {
+        PREFIX = /usr/local
+    }
+    BINDIR  = $$PREFIX/bin
+    DATADIR = $$PREFIX/share
+    CONFDIR = /etc
+    isEmpty(VARDIR) {
+        VARDIR  = /var/lib/$${TARGET}
+    }
+
+    INSTALLS += target config desktop icon32 vardir
+
+    target.path = $$BINDIR
+
+    config.path = $$CONFDIR
+    config.files += $${TARGET}.conf
+
+    desktop.path = $$DATADIR/applications
+    desktop.files += $${TARGET}.desktop
+
+    icon32.path = $$DATADIR/icons/hicolor/32x32/apps
+    icon32.files += ./data/32x32/$${TARGET}.png
+
+    vardir.path = $$VARDIR
+    vardir.commands = true
+}
